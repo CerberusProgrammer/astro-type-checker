@@ -1,8 +1,8 @@
 ---
 let filas = [
-  { letras: 'QWERTYUIOP'.split(''), colores: ['pink', 'pink', 'blue', 'blue', 'blue', 'green', 'green', 'green', 'pink', 'pink'] },
-  { letras: 'ASDFGHJKL'.split(''), colores: ['pink', 'pink', 'blue', 'blue', 'blue', 'green', 'green', 'pink', 'pink'] },
-  { letras: 'ZXCVBNM'.split(''), colores: ['pink', 'pink', 'blue', 'blue', 'blue', 'green', 'green'] }
+  { letras: ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'], colores: ['pink', 'blue', 'yellow', 'green', 'green', 'green', 'green', 'yellow', 'yellow', 'pink'] },
+  { letras: ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'], colores: ['pink', 'blue', 'yellow', 'green', 'green', 'green', 'green', 'yellow', 'pink'] },
+  { letras: ['Z', 'X', 'C', 'V', 'B', 'N', 'M'], colores: ['pink', 'blue', 'yellow', 'green', 'green', 'green', 'green'] }
 ];
 ---
 
@@ -10,25 +10,26 @@ let filas = [
   <div class="mb-4">
     <div class="bg-pink-200 inline-block px-3 py-1 rounded">Dedo meñique</div>
     <div class="bg-blue-200 inline-block px-3 py-1 rounded">Dedo anular</div>
-    <div class="bg-green-200 inline-block px-3 py-1 rounded">Dedo medio e índice</div>
+    <div class="bg-yellow-200 inline-block px-3 py-1 rounded">Dedo medio</div>
+    <div class="bg-green-200 inline-block px-3 py-1 rounded">Dedo índice</div>
     <div class="bg-yellow-200 inline-block px-3 py-1 rounded">Dedo pulgar</div>
   </div>
-  <div id="teclado" class="bg-gradient-to-r from-gray-300 to-gray-500 shadow-lg rounded p-4 inline-block">
+  <div id="teclado" class="bg-gradient-to-r from-gray-200 to-gray-400 shadow-lg rounded p-4 inline-block">
     {filas.map((fila, i) => (
       <div class="flex justify-center">
         <div class="flex">
-          {i === 0 && <div class="w-12"></div>}
+          {i === 0 && <div class=""></div>}
           {fila.letras.map((letra, j) => (
-            <div id={`key-${letra}`} class={`letra m-1 px-3 py-2 bg-white rounded-md shadow text-black font-mono text-center bg-${fila.colores[j]}-200`}>
+            <div id={`key-${letra}`} class={`letra m-1 px-3 py-2 bg-${fila.colores[j]}-200 rounded-md shadow text-black font-sans text-center`}>
               {letra}
             </div>
           ))}
-          {i === 2 && <div class="w-12"></div>}
+          {i === 2 && <div class=""></div>}
         </div>
       </div>
     ))}
     <div class="flex justify-center mt-4">
-      <div id="key-Space" class="letra m-1 px-20 py-2 rounded-md shadow text-black font-mono text-center bg-yellow-200">
+      <div id="key-Space" class="letra m-1 px-24 py-2 rounded-md shadow text-black font-sans text-center bg-purple-200">
         Espacio
       </div>
     </div>
