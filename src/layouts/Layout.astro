@@ -38,15 +38,14 @@ let filas = [
   </div>
 </div>
 
-
 <script>
-  function getRandomInt(min, max) {
+  function getRandomInt(min: number, max: number): number {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   
-  function generateRandomLetters() {
+  function generateRandomLetters(): string {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_';
     let randomLetters = '';
     const length = getRandomInt(50, 120);
@@ -59,7 +58,7 @@ let filas = [
   let randomLetters = generateRandomLetters();
   let currentIndex = 0;
   
-  function updateDisplay() {
+  function updateDisplay(): void {
     const letters = randomLetters.split('');
     const displayLetters = letters.map((letter, index) => {
       if (index === currentIndex) {
@@ -70,7 +69,10 @@ let filas = [
         return letter;
       }
     });
-    document.getElementById('randomLetters').innerHTML = displayLetters.join('');
+    const randomLettersElement = document.getElementById('randomLetters');
+    if (randomLettersElement) {
+      randomLettersElement.innerHTML = displayLetters.join('');
+    }
   }
   
   updateDisplay();
@@ -96,7 +98,10 @@ let filas = [
         updateDisplay();
       }
     } else {
-      document.querySelector('.underline').classList.add('text-red-500');
+      const underlineElement = document.querySelector('.underline');
+      if (underlineElement) {
+        underlineElement.classList.add('text-red-500');
+      }
     }
   });
   
