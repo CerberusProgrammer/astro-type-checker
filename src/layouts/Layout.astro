@@ -1,26 +1,21 @@
 ---
 let filas = [
-  { letras: ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'], colores: ['pink', 'blue', 'yellow', 'green', 'green', 'green', 'green', 'yellow', 'yellow', 'pink'] },
-  { letras: ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'], colores: ['pink', 'blue', 'yellow', 'green', 'green', 'green', 'green', 'yellow', 'pink'] },
+  { letras: ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'], colores: ['pink', 'blue', 'yellow', 'green', 'green', 'green', 'green', 'yellow', 'blue', 'pink'] },
+  { letras: ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'], colores: ['pink', 'blue', 'yellow', 'green', 'green', 'green', 'green', 'yellow', 'blue'] },
   { letras: ['Z', 'X', 'C', 'V', 'B', 'N', 'M'], colores: ['pink', 'blue', 'yellow', 'green', 'green', 'green', 'green'] }
 ];
 ---
 
 <div class="flex flex-col items-center justify-center min-h-screen">
-  <div class="mb-4">
-    <div class="bg-pink-200 inline-block px-3 py-1 rounded">Dedo meñique</div>
-    <div class="bg-blue-200 inline-block px-3 py-1 rounded">Dedo anular</div>
-    <div class="bg-yellow-200 inline-block px-3 py-1 rounded">Dedo medio</div>
-    <div class="bg-green-200 inline-block px-3 py-1 rounded">Dedo índice</div>
-    <div class="bg-yellow-200 inline-block px-3 py-1 rounded">Dedo pulgar</div>
-  </div>
-  <div id="teclado" class="bg-gradient-to-r from-gray-200 to-gray-400 shadow-lg rounded p-4 inline-block">
+  <h1 class="text-center text-4xl font-mono pb-16">Astro Type!</h1>
+  <div id="randomLetters" class="bg-white shadow rounded-2xl p-4 w-3/5 inline-block font-mono mb-16" style="font-size: 32px; background: rgba(255, 255, 255, 0.6)"></div>
+  <div id="teclado" class="rounded-2xl p-4 inline-block" style="background: linear-gradient(to right, rgba(188, 187, 187, 0.5), rgba(128, 128, 128, 0.5))">
     {filas.map((fila, i) => (
       <div class="flex justify-center">
         <div class="flex">
           {i === 0 && <div class=""></div>}
           {fila.letras.map((letra, j) => (
-            <div id={`key-${letra}`} class={`letra m-1 px-3 py-2 bg-${fila.colores[j]}-200 rounded-md shadow text-black font-sans text-center`}>
+            <div id={`key-${letra}`} class={`letra m-1 px-4 py-2 bg-${fila.colores[j]}-200 rounded-lg shadow text-black font-mono text-center`}>
               {letra}
             </div>
           ))}
@@ -29,25 +24,90 @@ let filas = [
       </div>
     ))}
     <div class="flex justify-center mt-4">
-      <div id="key-Space" class="letra m-1 px-24 py-2 rounded-md shadow text-black font-sans text-center bg-purple-200">
-        Espacio
+      <div id="key-Space" class="letra m-1 px-24 py-2 rounded-md shadow text-black font-mono text-center bg-purple-200">
+        Space
       </div>
     </div>
   </div>
+  <div class="mb-4 pt-8">
+    <div class="bg-pink-200 inline-block px-3 py-1 rounded font-mono">Little Finger</div>
+    <div class="bg-blue-200 inline-block px-3 py-1 rounded font-mono">Ring Finger</div>
+    <div class="bg-yellow-200 inline-block px-3 py-1 rounded font-mono">Middle Finger</div>
+    <div class="bg-green-200 inline-block px-3 py-1 rounded font-mono">Index Finger</div>
+    <div class="bg-purple-200 inline-block px-3 py-1 rounded font-mono">Thumb</div>
+  </div>
 </div>
 
-<script>
-window.addEventListener('keydown', (event) => {
-  const keyElement = document.getElementById(`key-${event.key.toUpperCase()}`);
-  if (keyElement) {
-    keyElement.style.transform = 'scale(1.2)';
-  }
-});
 
-window.addEventListener('keyup', (event) => {
-  const keyElement = document.getElementById(`key-${event.key.toUpperCase()}`);
-  if (keyElement) {
-    keyElement.style.transform = 'scale(1)';
+<script>
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-});
+  
+  function generateRandomLetters() {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_';
+    let randomLetters = '';
+    const length = getRandomInt(50, 120);
+    for (let i = 0; i < length; i++) {
+      randomLetters += alphabet[Math.floor(Math.random() * alphabet.length)] + ' ';
+    }
+    return randomLetters;
+  }
+  
+  let randomLetters = generateRandomLetters();
+  let currentIndex = 0;
+  
+  function updateDisplay() {
+    const letters = randomLetters.split('');
+    const displayLetters = letters.map((letter, index) => {
+      if (index === currentIndex) {
+        return `<span class="underline">${letter}</span>`;
+      } else if (index < currentIndex) {
+        return `<span class="text-gray-400">${letter}</span>`;
+      } else {
+        return letter;
+      }
+    });
+    document.getElementById('randomLetters').innerHTML = displayLetters.join('');
+  }
+  
+  updateDisplay();
+  
+  window.addEventListener('keydown', (event) => {
+    let key = event.key.toUpperCase();
+    if (key === ' ') {
+      key = '_';
+    }
+    const keyElement = document.getElementById(`key-${key}`);
+    if (keyElement) {
+      keyElement.style.transform = 'scale(1.2)';
+    }
+    if (key === randomLetters[currentIndex]) {
+      currentIndex++;
+      while (randomLetters[currentIndex] === ' ') {
+        currentIndex++;
+      }
+      updateDisplay();
+      if (currentIndex === randomLetters.length) {
+        randomLetters = generateRandomLetters();
+        currentIndex = 0;
+        updateDisplay();
+      }
+    } else {
+      document.querySelector('.underline').classList.add('text-red-500');
+    }
+  });
+  
+  window.addEventListener('keyup', (event) => {
+    let key = event.key.toUpperCase();
+    if (key === ' ') {
+      key = '_';
+    }
+    const keyElement = document.getElementById(`key-${key}`);
+    if (keyElement) {
+      keyElement.style.transform = 'scale(1)';
+    }
+  });
 </script>
